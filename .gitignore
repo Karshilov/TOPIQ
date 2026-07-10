@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+results/
+benchmark/topiq_bench
+benchmark/meta.bin
+benchmark/orig.f32
+benchmark/dec.f32
