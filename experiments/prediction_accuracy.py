@@ -36,7 +36,7 @@ from topiq.utils import (
     compress, compute_bias_correction,
 )
 
-REL_EBS = [5e-3, 2e-3, 1e-3, 5e-4, 2e-4, 1e-4, 5e-5, 1e-5]
+REL_EBS = [1e-3]
 COMPRESSORS = ["sz3", "sperr", "zfp"]
 
 CLOUDY_FIELDS = [

@@ -41,9 +41,6 @@ for name in ['dark_matter_density', 'baryon_density']:
     d = np.fromfile(f'{name}.f32', dtype=np.float32)
     np.log(1.0 + d.astype(np.float64)).astype(np.float32).tofile(f'{name}_log.f32')
     print(f'    {name}.f32 -> {name}_log.f32')
-import os
-os.remove('dark_matter_density.f32')
-os.remove('baryon_density.f32')
 "
 echo "  Done."
 
@@ -72,7 +69,7 @@ echo "  Done."
 # ── Verify ─────────────────────────────────────────────────────────────
 echo ""
 echo "Verifying files..."
-EXPECTED="CLDTOT_1_1800_3600.f32 CLDHGH_1_1800_3600.f32 FLUT_1_1800_3600.f32 FLUTC_1_1800_3600.f32 dark_matter_density_log.f32 baryon_density_log.f32 velocity_x.f32 PRES-98x1200x1200.f32 T-98x1200x1200.f32 TCf48.bin.f32 Uf48.bin.f32"
+EXPECTED="CLDTOT_1_1800_3600.f32 CLDHGH_1_1800_3600.f32 FLUT_1_1800_3600.f32 FLUTC_1_1800_3600.f32 dark_matter_density.f32 baryon_density.f32 dark_matter_density_log.f32 baryon_density_log.f32 velocity_x.f32 PRES-98x1200x1200.f32 T-98x1200x1200.f32 TCf48.bin.f32 Uf48.bin.f32"
 MISSING=0
 for f in $EXPECTED; do
     if [ -f "$f" ]; then
@@ -86,7 +83,7 @@ done
 
 if [ "$MISSING" -eq 0 ]; then
     echo ""
-    echo "All 11 fields ready in $(pwd)"
+    echo "All 13 fields ready in $(pwd)"
     echo "Usage: python experiments/prediction_accuracy.py --data-dir $(pwd)"
 else
     echo ""

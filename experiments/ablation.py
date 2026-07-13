@@ -83,9 +83,9 @@ def get_datasets(data_dir):
         "NYX": {
             "data_dir": d,
             "shape": (512, 512, 512), "dtype": np.float32,
-            "fields": ["dark_matter_density_log.f32", "baryon_density_log.f32",
+            "fields": ["baryon_density.f32", "dark_matter_density.f32",
                        "velocity_x.f32"],
-            "ws_pairs": [("dark_matter_density_log.f32", "velocity_x.f32")],
+            "ws_pairs": [("baryon_density.f32", "dark_matter_density.f32")],
             "eval_block": (32, 32, 32), "alpha_block": (32, 32, 32),
         },
         "SCALE": {
