@@ -14,7 +14,9 @@ Artifact for reproducing the experimental results in the paper.
 bash scripts/prepare_data.sh data
 ```
 
-Downloads all four datasets from [SDRBench](https://sdrbench.github.io/) (~5 GB), extracts the needed fields, and computes log-density transforms for NYX.
+Downloads NYX, SCALE-LETKF, and Hurricane datasets from [SDRBench](https://sdrbench.github.io/) and extracts the needed fields. CESM-ATM fields are bundled in the Docker image.
+
+**Note on CESM-ATM data:** The CESM-ATM dataset on SDRBench has been updated since our experiments, and SDRBench does not support version control. To exactly reproduce the numbers in the paper, use the original CESM fields bundled in the Docker image (or contact the authors). To reproduce the methodology and verify that TOPIQ achieves comparable accuracy, you may download the current CESM-ATM data directly from SDRBench and place the four fields (`CLDTOT`, `CLDHGH`, `FLUT`, `FLUTC`) in the data directory.
 
 ## Quick Start
 

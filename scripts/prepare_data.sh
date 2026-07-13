@@ -5,20 +5,25 @@ DATA_DIR="${1:-data}"
 mkdir -p "$DATA_DIR"
 cd "$DATA_DIR"
 
-CESM_URL="https://g-8d6b0.fd635.8443.data.globus.org/ds131.2/Data-Reduction-Repo/raw-data/CESM-ATM/SDRBENCH-CESM-ATM-cleared-1800x3600.tar.gz"
 NYX_URL="https://g-8d6b0.fd635.8443.data.globus.org/ds131.2/Data-Reduction-Repo/raw-data/EXASKY/NYX/SDRBENCH-EXASKY-NYX-512x512x512.tar.gz"
 SCALE_URL="https://g-8d6b0.fd635.8443.data.globus.org/ds131.2/Data-Reduction-Repo/raw-data/SCALE_LETKF/SDRBENCH-SCALE-98x1200x1200.tar.gz"
 HURRICANE_URL="https://g-8d6b0.fd635.8443.data.globus.org/ds131.2/Data-Reduction-Repo/raw-data/Hurricane-ISABEL/SDRBENCH-Hurricane-ISABEL-100x500x500.tar.gz"
 
 # ── CESM-ATM (2D, 1800x3600) ──────────────────────────────────────────
+# SDRBench updated this dataset after our experiments; the current tarball
+# contains different data.  The original fields are bundled in the Docker
+# image under /data/cesm_fields.tar.gz.
 CESM_FIELDS="CLDTOT_1_1800_3600.f32 CLDHGH_1_1800_3600.f32 FLUT_1_1800_3600.f32 FLUTC_1_1800_3600.f32"
-echo "[1/4] Downloading CESM-ATM..."
-wget -q --show-progress -N "$CESM_URL" -O cesm.tar.gz
-echo "  Extracting needed fields..."
-for f in $CESM_FIELDS; do
-    tar xzf cesm.tar.gz --strip-components=1 --wildcards "*/$f"
-done
-rm -f cesm.tar.gz
+CESM_LOCAL="/data/cesm_fields.tar.gz"
+if [ -f "$CESM_LOCAL" ]; then
+    echo "[1/4] Extracting bundled CESM-ATM fields..."
+    tar xzf "$CESM_LOCAL"
+else
+    echo "[1/4] ERROR: CESM fields not found at $CESM_LOCAL"
+    echo "  The CESM-ATM dataset on SDRBench has been updated since our experiments."
+    echo "  Please use the Docker image which bundles the original data."
+    exit 1
+fi
 echo "  Done."
 
 # ── NYX (3D, 512x512x512) ─────────────────────────────────────────────
